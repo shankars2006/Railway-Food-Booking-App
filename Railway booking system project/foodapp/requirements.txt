@@ -1,0 +1,6 @@
+pip install Django mysqlclient
+
+
+to run file
+
+python manage.py runserver

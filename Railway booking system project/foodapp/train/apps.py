@@ -1,0 +1,10 @@
+from django.apps import AppConfig
+
+
+class TrainConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'train'
+
+
+    def ready(self):
+        import train.signals # Connect the signals

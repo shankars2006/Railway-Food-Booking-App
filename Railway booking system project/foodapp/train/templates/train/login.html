@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackBite - Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --primary-orange: #f97316;
+            --secondary-orange: #fdba74;
+            --light-bg: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+        
+        .auth-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .auth-body {
+            padding: 25px;
+        }
+        
+        .auth-logo {
+            font-weight: 700;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .auth-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+            text-align: center;
+        }
+        
+        .form-control {
+            padding: 12px 15px;
+            border-radius: 5px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .btn-auth {
+            background-color: var(--primary-orange);
+            border: none;
+            color: white;
+            padding: 12px;
+            font-weight: 600;
+            width: 100%;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-auth:hover {
+            background-color: #ea580c;
+            transform: translateY(-2px);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #64748b;
+        }
+        
+        .auth-footer a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .auth-footer a:hover {
+            color: var(--primary-orange);
+            text-decoration: underline;
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="auth-container">
+                    <div class="auth-header">
+                        <div class="auth-logo">
+                            <i class="fas fa-train me-2"></i>TrackBite
+                        </div>
+                        <p>Sign in to your account</p>
+                    </div>
+                    
+                    <div class="auth-body">
+                        <h3 class="auth-title">Welcome Back</h3>
+                        
+                        <form method="POST" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" placeholder="Enter your username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" placeholder="Enter your password" required>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" checked>
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                                <a href="#" class="float-end">Forgot password?</a>
+                            </div>
+                            <button type="submit" class="btn btn-auth mb-3">Sign In</button>
+                        </form>
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        <div class="auth-footer">
+                            Don't have an account? <a href="{% url 'register'%}">Create account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

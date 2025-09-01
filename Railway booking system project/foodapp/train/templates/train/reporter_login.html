@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporter Login</title>
+    <!-- Bootstrap CSS for modern styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --primary-orange: #f97316;
+            --secondary-orange: #fdba74;
+            --light-bg: #f8fafc;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+        }
+
+        /* Background with image */
+        .background-container {
+            background: linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.8)), url('https://images.unsplash.com/photo-1579782414766-3e46c96d8f28?ixlib=rb-4.0.3&auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Login card styling */
+        .login-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(30, 64, 175, 0.2);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            border-top: 5px solid var(--primary-orange);
+        }
+
+        .login-title {
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .login-title i {
+            color: var(--primary-orange);
+            margin-right: 10px;
+        }
+
+        .login-subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            background-color: var(--light-bg);
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+            outline: none;
+        }
+
+        .input-group-text {
+            background-color: var(--light-bg);
+            border: 2px solid #e2e8f0;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            color: var(--primary-blue);
+            padding: 0 15px;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: var(--secondary-blue);
+            background-color: #fff;
+        }
+
+        .btn-login {
+            background: linear-gradient(to right, var(--primary-orange), var(--secondary-orange));
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(249, 115, 22, 0.2);
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(to right, #ea580c, #fb923c);
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 6px 8px rgba(249, 115, 22, 0.3);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        /* Animation for the card */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-card {
+            animation: fadeIn 0.7s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="login-card">
+            <h2 class="login-title"><i class="fas fa-hat-chef"></i>Reporter Login</h2>
+            <p class="login-subtitle">Access your dashboard to Serve.</p>
+            <form method="POST" action="{% url 'reporter_login' %}">
+            {% csrf_token %}
+                <div class="mb-3">
+                    <label for="chefId" class="form-label visually-hidden">Reporter ID</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                        <input type="text" name="username" class="form-control" id="chefId" placeholder="Reporter ID" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label visually-hidden">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-login w-100">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

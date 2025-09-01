@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Details</title>
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --primary-orange: #f97316;
+            --secondary-orange: #fdba74;
+            --light-bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 12px 0 6px;
+            color: var(--primary-blue);
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .food-info {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #f3f4f6;
+        }
+
+        .food-info h4 {
+            margin: 0;
+            color: var(--primary-orange);
+        }
+
+        .food-info p {
+            margin: 4px 0;
+            color: #374151;
+        }
+
+        .total-display {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: var(--primary-orange);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn:hover {
+            background: var(--secondary-orange);
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .popup-content h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .popup-content button {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .popup-content button:hover {
+            background: var(--secondary-orange);
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: scale(0.9);}
+            to {opacity: 1; transform: scale(1);}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Food</h2>
+
+        <!-- Food Details -->
+        <div class="food-info" id="foodDetails">
+            <h4 id="foodName">{{ item.name }}</h4>
+            <p id="foodDesc">{{ item.description }}</p>
+            <p>Price: ₹<span id="foodPrice">{{ item.price }}</span></p>
+        </div>
+
+        <!-- Order Form -->
+        <form method="post" action="{% url 'place_order' item.id %}">
+            {% csrf_token %}
+            <!-- Quantity -->
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1" oninput="updateTotal()">
+
+            <!-- Total -->
+            <div class="total-display">
+                Total: ₹<span id="total">{{ item.price }}</span>
+            </div>
+
+            <!-- Place Order Button -->
+            <button class="btn" type="submit">Place Order</button>
+        </form>
+
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup" style="display: none;">
+        <div class="popup-content">
+            <h3>✅ Order Placed!</h3>
+            <p>Your food will be delivered soon.</p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Update total dynamically when quantity changes
+        function updateTotal() {
+            let price = parseFloat(document.getElementById("foodPrice").innerText);
+            let qty = parseInt(document.getElementById("quantity").value);
+            document.getElementById("total").innerText = (price * qty).toFixed(2);
+        }
+
+        // Popup functions
+        function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        // Initial total
+        updateTotal();
+    </script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackBite - Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --primary-orange: #f97316;
+            --secondary-orange: #fdba74;
+            --light-bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+        }
+
+        .navbar {
+            background-color: var(--primary-blue);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 0;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .menu-item-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            height: 100%;
+            margin-bottom: 20px;
+        }
+
+        .menu-item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item-image {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            object-fit: cover; /* Ensures image covers the area without distortion */
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-item-content {
+            padding: 20px;
+        }
+
+        .menu-item-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--primary-blue);
+        }
+
+        .menu-item-desc {
+            color: #64748b;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .menu-item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .menu-item-price {
+            font-weight: 700;
+            color: var(--primary-orange);
+            font-size: 1.2rem;
+        }
+
+        .menu-item-rating {
+            color: #f59e0b;
+        }
+
+        .menu-item-station {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        .btn-see-more {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .btn-see-more:hover {
+            background: #ea580c;
+            transform: translateY(-2px);
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        footer {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-orange);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-train me-2"></i>TrackBite
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">How it Works</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Announcements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Track Order</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="{% url 'logout'%}" class="btn btn-primary">Logout</a>
+                    <a href="{% url 'order_details'%}" class="btn btn-primary">order_details</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold">Our Menu</h1>
+            <p class="lead">Have A Great Meal</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="filter-section">
+            <h5 class="mb-3">Select Your Station</h5>
+            <div class="mb-3">
+                <select id="stationDropdown" class="form-select">
+                    <option value="All Stations">All Stations</option>
+                    <!-- Dynamically populate station options from Django backend -->
+                    {% for station in stations %}
+                        <option value="{{ station.name }}">{{ station.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row" id="menuItems">
+    <!-- Django template loop to render menu items from the backend context -->
+    {% for menu_item in menu_items %}
+    <div class="col-md-6 mb-4" data-station="{{ menu_item.available_station.name }}">
+        <div class="menu-item-card">
+            <img src="https://placehold.co/600x400/FF7F50/FFF?text={{ menu_item.name|urlencode }}" 
+                 class="menu-item-image" alt="{{ menu_item.name }}">
+            <div class="menu-item-content">
+                <!-- Corrected link to details view -->
+                <a href="{% url 'details' menu_item.id %}">
+                    <h4 class="menu-item-title">{{ menu_item.name }}</h4>
+                </a>
+                <p class="menu-item-desc">{{ menu_item.description }}</p>
+                <div class="menu-item-meta">
+                    <!-- Display price with currency symbol -->
+                    <span class="menu-item-price">₹{{ menu_item.price }}</span>
+                    <!-- Static rating for now -->
+                    <span class="ms-3 text-muted menu-item-rating">
+                        <i class="fas fa-star"></i> 4.5
+                    </span>
+                </div>
+                <p class="menu-item-station">
+                    <i class="fas fa-map-marker-alt"></i> Available at {{ menu_item.available_station.name }}
+                </p>
+                <!-- Updated "See More" button to point to details view -->
+                <a href="{% url 'details' menu_item.id %}">
+                    <button class="btn-see-more">See More</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center">
+        <p class="lead text-muted">No menu items available at this time.</p>
+    </div>
+    {% endfor %}
+</div>
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title"><i class="fas fa-train me-2"></i>TrackBite</h5>
+                    <p>Order delicious food on trains and get it delivered to your seat. Fresh, hygienic and tasty meals from trusted restaurants.</p>
+                    <div class="d-flex mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="index.html">Home</a>
+                        <a href="#">How It Works</a>
+                        <a href="menu.html">Menu</a>
+                        <a href="#">Announcements</a>
+                        <a href="#">Track Order</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">Contact Us</h5>
+                    <div class="footer-links">
+                        <a href="#"><i class="fas fa-phone-alt me-2"></i> +91 9876543210</a>
+                        <a href="#"><i class="fas fa-envelope me-2"></i> support@trackbite.com</a>
+                        <a href="#"><i class="fab fa-whatsapp me-2"></i> WhatsApp Support</a>
+                        <a href="#"><i class="fas fa-map-marker-alt me-2"></i> Mumbai, India</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">Legal</h5>
+                    <div class="footer-links">
+                        <a href="#">Terms & Conditions</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Cancellation Policy</a>
+                        <a href="#">Refund Policy</a>
+                        <a href="#">Shipping Policy</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">© 2025 TrackBite. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // This JavaScript now works on the elements rendered by Django.
+        // It filters the displayed DOM elements based on the selected station.
+        document.getElementById('stationDropdown').addEventListener('change', function() {
+            const selectedStation = this.value;
+            const menuItems = document.querySelectorAll('#menuItems .col-md-6');
+
+            menuItems.forEach(item => {
+                const itemStation = item.getAttribute('data-station');
+                if (selectedStation === 'All Stations' || itemStation === selectedStation) {
+                    item.style.display = 'block'; // Show the item
+                } else {
+                    item.style.display = 'none'; // Hide the item
+                }
+            });
+        });
+    </script>
+</body>
+</html>

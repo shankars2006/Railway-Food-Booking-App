@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackBite - Chef Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --primary-orange: #f97316;
+            --secondary-orange: #fdba74;
+            --light-bg: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+        }
+        
+        .navbar {
+            background-color: var(--primary-blue);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+        
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1556910603-2e061730045d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); /* Chef-related image */
+            background-size: cover;
+            background-position: center;
+            padding: 60px 0;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .orders-table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .orders-table th, .orders-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .orders-table th {
+            background-color: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .orders-table tr:hover {
+            background-color: #f8fafb;
+        }
+
+        .orders-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .orders-table .btn-pickup {
+            background-color: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .orders-table .btn-pickup:hover {
+            background-color: #ea580c;
+        }
+
+        .orders-table .btn-complete {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .orders-table .btn-complete:hover {
+            background-color: #1d368e;
+        }
+        
+        /* Simplified Footer */
+        .simplified-footer {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 20px 0;
+            margin-top: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-train me-2"></i>TrackBite
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">How it Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Announcements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Track Order</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="{% url 'logout'%}" class="btn btn-primary">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold">Chef Dashboard</h1>
+            <p class="lead">View and manage incoming food orders</p>
+        </div>
+    </div>
+
+    <div class="container">
+    <!-- Station Filter Dropdown -->
+    <div class="filter-section">
+        <h5 class="mb-3">Filter Orders by Station</h5>
+        <div class="mb-3">
+            <select id="stationDropdown" class="form-select">
+                <option value="All Stations">All Stations</option>
+                <!-- Dynamically populate station options from Django backend -->
+                {% for station in stations %}
+                    <option value="{{ station.name }}">{{ station.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <!-- Customer Orders Table -->
+    <div class="orders-table-container">
+        <h4 class="cart-title">Customer Orders</h4>
+        <div class="table-responsive">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Food Item</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr data-station="{{ order.station.name }}">
+                            <td>{{ order.customer.username }}</td>
+                            <td>{{ order.item.name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>
+                                {% if not order.order_accepted %}
+                                    <form method="post" action="{% url 'pickup_order' order.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-pickup me-2">Pickup</button>
+                                    </form>
+                                {% endif %}
+                                
+                                {% if order.order_accepted and not order.order_completed %}
+                                    <form method="post" action="{% url 'complete_order' order.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-complete">Complete</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">No new orders to display.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // This JavaScript now works on the elements rendered by Django.
+    // It filters the displayed DOM elements based on the selected station.
+    document.getElementById('stationDropdown').addEventListener('change', function() {
+        const selectedStation = this.value;
+        const orderRows = document.querySelectorAll('.orders-table tbody tr');
+
+        orderRows.forEach(row => {
+            const rowStation = row.getAttribute('data-station');
+            if (selectedStation === 'All Stations' || rowStation === selectedStation) {
+                row.style.display = ''; // Show the row
+            } else {
+                row.style.display = 'none'; // Hide the row
+            }
+        });
+    });
+</script>
+
+
+    <!-- Simplified Footer -->
+    <footer class="simplified-footer">
+        <div class="container">
+            <p class="mb-0">© 2025 TrackBite. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS (for Bootstrap components like togglers) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
